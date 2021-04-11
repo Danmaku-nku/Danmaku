@@ -1,3 +1,8 @@
 https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/danmaku/danmaku_proto.md
+https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/video/info.md
+
 https://api.bilibili.com/x/player/pagelist?bvid=BV1uA411L7Y7
 http://api.bilibili.com/x/v2/dm/web/seg.so?oid=322535361&type=1&segment_index=0
+
+http://api.bilibili.com/x/v2/dm/history/index?type=1&oid=172423516&month=2020-05
+https://api.bilibili.com/x/v2/dm/web/history/seg.so?type=1&oid=172423516&date=2020-05-06

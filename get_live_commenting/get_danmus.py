@@ -8,8 +8,8 @@ from google.protobuf.json_format import MessageToJson, Parse
 
 def get_danmu(videos):
     for video in videos:
-        print("writing danmu for "+video)
-        with open("./danmu/" + video + ".csv", "w", newline='',encoding='utf-8') as f_write:
+        print("writing danmu for " + video)
+        with open("./danmu/" + video + ".csv", "w", newline='', encoding='utf-8') as f_write:
             writer = csv.writer(f_write)
 
             for root, dirs, files in os.walk("./seg/" + video):
