@@ -1,11 +1,16 @@
-import codecs
+
 from danmu_pb2 import DmSegMobileReply
+import google.protobuf.text_format as text_format
 from google.protobuf.json_format import MessageToJson,Parse
-import json
+import xml
 
 DM = DmSegMobileReply()
-with open("./seg.so","rb") as f:
+with open("seg/seg.so","rb") as f:
     DM.ParseFromString(f.read())
 
-with codecs.open("./seg.json","w","utf-8") as f:
-    f.write(json.dumps(json.loads(MessageToJson(DM)),ensure_ascii=False))
+for i in range(len(DM.elems)):
+    print(DM.elems[i].progress/60000)
+    print(DM.elems[i].content)
+    print()
+
+# print(text_format.MessageToString(DM.elems[0],as_utf8=True))

@@ -1,2 +1,3 @@
-https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/danmaku/history.md
-http://api.bilibili.com/x/v1/dm/web/seg.so?oid=197839345&type=1
+https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/danmaku/danmaku_proto.md
+https://api.bilibili.com/x/player/pagelist?bvid=BV1uA411L7Y7
+http://api.bilibili.com/x/v2/dm/web/seg.so?oid=322535361&type=1&segment_index=0

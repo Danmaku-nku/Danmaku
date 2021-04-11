@@ -1,18 +1,17 @@
 import random
 import re
 import time
+import os
 
+import csv
 import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-#from spider.bullet_chat.ua_choose import get_ua  # 随机获取ua函数
+
+from get_danmus import *
 
 
-class BulletChat:
-    def __init__(self, bvid, start_time='2020-06-02', end_time='2020-06-03'):
+class GetDanmuSeg:
+    def __init__(self, bvid):
         self.bvid = bvid
-        self.start_time = start_time
-        self.end_time = end_time
         self.headers = {
             "cookie": "c8a19b78%2C1620925524%2C5d1eb*b1", # 爬取弹幕需要登陆，通过开发者模式获取你的登录cookie
             "origin": "https://www.bilibili.com",
@@ -22,60 +21,53 @@ class BulletChat:
             "sec-fetch-site": "same-site",
             "user-agent":  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36" # 换成自己的ua就行
         }
-        # 初始化直接生成一个csv文件
-        pd.Series().to_csv(self.bvid + '.csv', header=False)
 
-    def get_oid(self):
+
+    def get_oid_duration(self):
         """
         通过视频编号获取用户的id->oid
         :param bvid: 视频编号
-        :return: oid
+        :return: oid, duration
         """
         bvid_url = 'https://api.bilibili.com/x/player/pagelist?bvid={0}'.format(self.bvid)
         response = requests.get(bvid_url, headers=self.headers)
         oid = re.search(r'"cid":(\d+)', response.text).group(1)
-        return oid
+        duration = re.search(r'"duration":(\d+)', response.text).group(1)
+        return oid, duration
 
-    def get_chat_urls(self):
+
+    def get_urls(self):
         """
-        获取指定时间内的弹幕
-        :param oid: 用户id
-        :param start_time: 爬取开始时间
-        :param end_time: 爬取结束时间
-        :return: 弹幕url列表
+        获取弹幕url
+        :param oid: 用户id duration: 视频长度
+        :return: 弹幕url_list列表
         """
+        oid, duration = self.get_oid_duration()
+
         url_list = []
-        oid = self.get_oid()
-
-        # date_list = [i for i in pd.date_range(start=self.start_time, end=self.end_time).strftime('%Y-%m-%d')]
-        # for date in date_list:
-        #     # url = 'https://api.bilibili.com/x/v1/dm/list.so?oid={0}&date={1}'.format(oid, date)
-        #     url = 'http://api.bilibili.com/x/v2/dm/web/history/seg.so?oid={0}&date={1}'.format(oid, date)
-        #     url_list.append(url)
-
-        url = 'https://api.bilibili.com/x/v1/dm/list.so?oid={0}'.format(oid)
-        url_list.append(url)
+        for i in range(int(int(duration)/360)+1):
+            url = 'http://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid={0}&segment_index='.format(oid) + str(i+1)
+            url_list.append(url)
 
         return url_list
 
-    def get_bullet_chat(self):
+
+    def get_danmu_seg(self):
         """
         爬取并保存弹幕数据
-        :param url_list: 弹幕url列表
+        :param url
         :return:
         """
         print('正在爬取视频编号为{}的弹幕数据'.format(self.bvid))
-        urls = self.get_chat_urls()
-        for i in range(len(urls)):
-            chat_response = requests.get(urls[i], headers=self.headers)
-            chat_response.encoding = 'utf-8'
-            soup = BeautifulSoup(chat_response.text)
-            data = soup.find_all('d')
-            chat_data = [data[i].text for i in range(len(data))]
+        urls = self.get_urls()
+        os.makedirs("./seg/" + self.bvid)
 
-            # 以pandas Series格式写入数据
-            chat_series = pd.Series(chat_data)
-            chat_series.to_csv(self.bvid + '.csv', mode="a", header=False, index=False)
+        for i in range(len(urls)):
+            seg = requests.get(urls[i], headers=self.headers)
+
+            with open(r"./seg/"+self.bvid+"/seg_"+str(i)+".so", "wb") as f:
+                f.write(seg.content)
+
             print('链接{}的弹幕数据爬取成功'.format(urls[i]))
 
             if i % 10 == 0:
@@ -83,33 +75,13 @@ class BulletChat:
 
 
 if __name__ == '__main__':
-    code = input('请输入视频编号：')
-    bullet_chat = BulletChat(code)
-    bullet_chat.get_bullet_chat()
+    with open('videos.csv', 'r') as f:
+        videos = list(csv.reader(f))[0]
 
+    for i in range(len(videos)):
+        danmu_seg = GetDanmuSeg(videos[i])
+        danmu_seg.get_danmu_seg()
 
+    get_danmu(videos)
 
-# BV1LC4y1a73t
-
-
-#
-# import requests
-# import google.protobuf.text_format as text_format
-# import bilibili.community.service.dm.v1_pb2 as Danmaku
-#
-# url = 'http://api.bilibili.com/x/v2/dm/web/history/seg.so'
-# params = {
-#     'type':1,           #弹幕类型
-#     'oid':144541892,    #cid
-#     'date':'2020-01-21' #弹幕日期
-# }
-# cookies = {
-#     'SESSDATA':'xxx'
-# }
-# resp = requests.get(url,params,cookies=cookies)
-# data = resp.content
-#
-# danmaku_seg = Danmaku.DmSegMobileReply()
-# danmaku_seg.ParseFromString(data)
-#
 # print(text_format.MessageToString(danmaku_seg.elems[0],as_utf8=True))
