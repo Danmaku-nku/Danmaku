@@ -1,0 +1,2 @@
+https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/danmaku/history.md
+http://api.bilibili.com/x/v1/dm/web/seg.so?oid=197839345&type=1
