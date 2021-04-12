@@ -23,40 +23,39 @@ class GetDanmuSeg:
             # 换成自己的ua就行
         }
 
-    def get_oid_pubdate(self):
-        """
-        通过视频编号获取用户的id->oid
-        :param bvid: 视频编号
-        :return: oid, duration, pubdate
-        """
+        self.oid_list, self.pubdate = self.get_oidlist_pubdate()
+
+    def get_oidlist_pubdate(self):
         bvid_url = 'https://api.bilibili.com/x/player/pagelist?bvid={0}'.format(self.bvid)
         response = requests.get(bvid_url, headers=self.headers)
-        oid = re.search(r'"cid":(\d+)', response.text).group(1)
+        json_page_list = response.json()
+        page_list = json_page_list['data']
+
+        oid_list = []
+        for i in range(len(page_list)):
+            oid_list.append(re.search(r"'cid': (\d+)", str(page_list[i])).group(1))
 
         bvid_url = 'https://api.bilibili.com/x/web-interface/view?bvid={0}'.format(self.bvid)
         response = requests.get(bvid_url, headers=self.headers)
         pubdate = re.search(r'"pubdate":(\d+)', response.text).group(1)
 
-        return oid, pubdate
+        return oid_list, pubdate
 
-    def get_dates(self):
-        """
-        获取日期list
-        :param oid: 用户id pudate: 视频长度
-        :return: date_list列表
-        """
-        oid, pubdate = self.get_oid_pubdate()
-        date_stamp = int(pubdate)
+    def get_dates(self, oid):
+        date_stamp = int(self.pubdate)
         now = time.time()
 
         date_list = []
-        for i in range(3):  # for 3 month
+        for i in range(3):  # how many month
             date_month = datetime.datetime.fromtimestamp(date_stamp).strftime("%Y-%m")
             url = 'https://api.bilibili.com/x/v2/dm/history/index?type=1&oid={0}&month='.format(oid) + date_month
 
             response = requests.get(url=url, headers=self.headers)
+            time.sleep(random.uniform(0.01, 0.02))
+
             json_data = response.json()
-            date_list += json_data['data']
+            if json_data['data'] is not None:
+                date_list += json_data['data']
 
             date_stamp += 31 * 24 * 60 * 60
             if (date_stamp >= now):
@@ -64,43 +63,39 @@ class GetDanmuSeg:
 
         return date_list
 
+    def get_urls(self, page):
+        oid = self.oid_list[page]
 
-    def get_urls(self):
-        """
-        获取弹幕url
-        :param oid: 用户id duration: 视频长度
-        :return: 弹幕url_list列表
-        """
-        oid, pubdate = self.get_oid_pubdate()
-        date_list = self.get_dates()
+        date_list = self.get_dates(oid)
 
         url_list = []
         for i in range(len(date_list)):
-            url = 'https://api.bilibili.com/x/v2/dm/web/history/seg.so?type=1&oid={0}&date={1}'.format(oid, date_list[i])
+            url = 'https://api.bilibili.com/x/v2/dm/web/history/seg.so?type=1&oid={0}&date={1}'.format(oid,
+                                                                                                       date_list[i])
             url_list.append(url)
 
         return url_list
 
     def get_danmu_seg(self):
-        """
-        爬取并保存弹幕数据
-        :param url
-        :return:
-        """
         print('正在爬取视频{}的弹幕数据'.format(self.bvid))
-        urls = self.get_urls()
-        os.makedirs("./seg/" + self.bvid)
+        for page in range(len(self.oid_list)):
+            urls = self.get_urls(page)
 
-        for i in range(len(urls)):
-            seg = requests.get(urls[i], headers=self.headers)
+            os.makedirs("./seg/" + self.bvid + "/page_" + str(page))
+            for i in range(len(urls)):
+                # url_index =len(urls)-1
+                seg = requests.get(urls[i], headers=self.headers)
 
-            with open(r"./seg/" + self.bvid + "/seg_" + str(i) + ".so", "wb") as f:
-                f.write(seg.content)
+                with open(r"./seg/" + self.bvid + "/page_" + str(page) + "/seg_" + str(i) + ".so", "wb") as f:
+                    f.write(seg.content)
 
-            print('链接{}的弹幕数据爬取成功'.format(urls[i]))
+                print('链接{}的弹幕数据爬取成功'.format(urls[i]))
 
-            if i % 10 == 0:
                 time.sleep(random.uniform(3, 5))
+                if i % 10 == 0:
+                    time.sleep(random.uniform(3, 5))
+
+            time.sleep(random.uniform(3, 5))
 
 
 if __name__ == '__main__':
@@ -109,11 +104,5 @@ if __name__ == '__main__':
 
     for i in range(len(videos)):
         danmu_seg = GetDanmuSeg(videos[i])
-        print(danmu_seg.get_oid_pubdate())
         danmu_seg.get_danmu_seg()
-
-    get_danmu(videos)
-
-# print(time.time())
-
-
+        get_danmu(videos[i], len(danmu_seg.oid_list))
