@@ -46,7 +46,7 @@ class GetDanmuSeg:
         now = time.time()
 
         date_list = []
-        for i in range(3):  # how many month
+        for i in range(24):  # how many month
             date_month = datetime.datetime.fromtimestamp(date_stamp).strftime("%Y-%m")
             url = 'https://api.bilibili.com/x/v2/dm/history/index?type=1&oid={0}&month='.format(oid) + date_month
 
