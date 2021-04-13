@@ -82,20 +82,22 @@ class GetDanmuSeg:
             urls = self.get_urls(page)
 
             os.makedirs("./seg/" + self.bvid + "/page_" + str(page))
+            file_num = 0
             for i in range(len(urls)):
-                # url_index =len(urls)-1
-                seg = requests.get(urls[i], headers=self.headers)
+                if i % 5 == 0:
+                    seg = requests.get(urls[i], headers=self.headers)
 
-                with open(r"./seg/" + self.bvid + "/page_" + str(page) + "/seg_" + str(i) + ".so", "wb") as f:
-                    f.write(seg.content)
+                    with open(r"./seg/" + self.bvid + "/page_" + str(page) + "/seg_" + str(file_num) + ".so",
+                              "wb") as f:
+                        f.write(seg.content)
 
-                print('链接{}的弹幕数据爬取成功'.format(urls[i]))
-
-                time.sleep(random.uniform(3, 5))
-                if i % 10 == 0:
+                    print('链接{}的弹幕数据爬取成功'.format(urls[i]))
+                    file_num += 1
                     time.sleep(random.uniform(3, 5))
+                    if file_num % 10 == 0:
+                        time.sleep(random.uniform(50, 60))
 
-            time.sleep(random.uniform(3, 5))
+            time.sleep(random.uniform(50, 60))
 
 
 if __name__ == '__main__':
