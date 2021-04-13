@@ -6,8 +6,8 @@ from operator import itemgetter
 
 
 def get_danmu(video, page_num):
-    os.makedirs("./danmu/" + video)
-    for page in range(page_num):
+    # os.makedirs("./danmu/" + video)
+    for page in range(5,page_num):
         print("writing danmu for " + str(video) + " p" + str(page))
 
         with  open("./danmu/" + video + "/p_" + str(page) + ".csv", "w+", newline='', encoding='utf-8') as f_write:
