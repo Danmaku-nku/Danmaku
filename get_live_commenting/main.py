@@ -13,8 +13,9 @@ class GetDanmuSeg:
     def __init__(self, bvid):
         self.bvid = bvid
         self.headers = {
-            # "cookie": "SESSDATA=c8a19b78%2C1620925524%2C5d1eb*b1",
-            "cookie": "SESSDATA=3349b8d6%2C1633339932%2Cb8cd9*41",
+            # "cookie": "SESSDATA=36227725%2C1634015792%2C54187%2A41",
+            "cookie": "SESSDATA=ad7ab5d5%2C1634016943%2C747ab%2A41", # zyx
+            # "cookie": "SESSDATA=3349b8d6%2C1633339932%2Cb8cd9*41", # kjh
             "origin": "http://www.bilibili.com",
             # "referer": "http://www.bilibili.com/video/BV1os41127rm",
             "sec-fetch-dest": "empty",
@@ -50,11 +51,13 @@ class GetDanmuSeg:
         for i in range(24):  # how many month
             date_month = datetime.datetime.fromtimestamp(date_stamp).strftime("%Y-%m")
             url = 'http://api.bilibili.com/x/v2/dm/history/index?type=1&oid={0}&month='.format(oid) + date_month
+            # print(url)
 
             response = requests.get(url=url, headers=self.headers)
             time.sleep(random.uniform(0.01, 0.02))
 
             json_data = response.json()
+            print(json_data)
             if json_data['data'] is not None:
                 date_list += json_data['data']
 
@@ -79,7 +82,7 @@ class GetDanmuSeg:
 
     def get_danmu_seg(self):
         print('正在爬取视频{}的弹幕数据'.format(self.bvid))
-        for page in range(5,len(self.oid_list)):
+        for page in range(len(self.oid_list)):
             urls = self.get_urls(page)
 
             os.makedirs("./seg/" + self.bvid + "/page_" + str(page))
