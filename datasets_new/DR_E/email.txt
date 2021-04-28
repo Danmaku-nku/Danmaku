@@ -2,11 +2,12 @@
 	我是来自南开大学的一名本科生。我读了您关于弹幕的文章，感到这是一个很有趣且厉害的工作。我对关于使用弹幕做视频摘要的部分非常感兴趣，我们想继续改进这方面的工作。如果你们愿意提供你们标注的DR_E数据集，我们会在文章里引用并特别感谢你们。
 	
 
-Dear Professor:	
-	This is Yixuan Zhang, I am an undergraduate student from Nankai University.I read your article on the Danmaku 
+Dear Qingchun Bai:	
+	This is Yixuan Zhang, an undergraduate student from Nankai University.I read your article on the Danmaku 
 	[Stories That Big Danmaku Data Can Tell as a New Media] and found it a very interesting and brilliant job.
 	I am very interested in the part about using Danmaku to make video summaries, and we want to continue to improve the work in this area.
 	If you would like to provide your annotated DR_E dataset, we will cite your paper once the work is done.
+	If you require any further information, please let me know.
 	Thanks a lot.
 Best,
 Yixuan
