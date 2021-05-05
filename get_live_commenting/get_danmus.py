@@ -6,7 +6,7 @@ from operator import itemgetter
 
 
 def get_danmu(video, page_num):
-    # os.makedirs("./danmu/" + video)
+    os.makedirs("./danmu/" + video)
     for page in range(page_num):
         print("writing danmu for " + str(video) + " p" + str(page))
 
