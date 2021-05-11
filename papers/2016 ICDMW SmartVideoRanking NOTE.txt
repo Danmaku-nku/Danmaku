@@ -1,0 +1,17 @@
+in this paper, we assume any comment is related to
+an emotion and believe that such time-synchronized comments
+are effective resources for obtaining useful responses for
+searching videos on the basis of emotions.
+
+Figure 1 gives an overview of our proposal together with
+some examples. The query is “Len’s song”2. The first step is
+to obtain videos related to the query. The second step is to
+extract comments, such as “Great lyrics” and “So cute”, that
+were posted on the videos. The third step computes feature
+values for each comment. Here, each comment corresponds
+to an emotion. Features are categorized into 14 groups such
+as the query relevance (QREL) and query similarity (QSIM).
+The fourth step uses machine learning to estimate the degree of usefulness of each comment. In this example, the
+comment “Quite harmonious” is estimated to be the most
+useful. SmartVideoRanking is implemented on the basis of
+the estimated results
