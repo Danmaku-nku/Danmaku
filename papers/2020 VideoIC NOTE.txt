@@ -1,0 +1,4 @@
+,we build a large scale video interactive comments
+dataset called VideoIC, which consists of 4951 videos spanning 557
+hours and 5 million comments.
+

@@ -1,0 +1,6 @@
+Dataset We use a real-world dataset provided by [14]
+whose TSC data is downloaded from bilibili, a popular
+Danmu-enabled video website in China. We first select
+20 videos with most TSCs from category “Movie”, and
+50 videos from category “Sport”, to investigate whether
+our model can perform well on different types of videos.

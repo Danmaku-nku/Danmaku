@@ -1,0 +1,50 @@
+Specifically, we present a
+larger-scale TSC dataset with four-level structures and rich
+self-labeled attributes
+
+我们将从在线视频网站收集到的TSC数据重新组织为季-集-评论-用户四级结构。
+我们全面的TSC数据集包含近900季的动画，超过17K集，以及大约300万用户产生的超过3200万条评论。
+它不仅超越了现有的任何TSC数据集，而且包含了更丰富的属性，其中一些属性甚至可以被视为标签，如标签和喜好。
+
+Multi-Dimensional Data Attributes. This dataset contains
+more abundant attributes such as season tags, episode coins
+(likes) and user history that can be regarded as labels for
+supervised learning problems.
+
+Dynamic Data Update. This dataset is “dynamic” since it
+records variation of TSCs for each episode as time elapses
+while all previous datasets are “static” that only save a single
+copy at a certain timestamp.
+
+
+Episode Data Structure
+
+episode_id: Primary key. The internal id of this episode.
+av_id: The video id of this episode, used in matching url of episode page.
+cid: The comment id of this episode.
+coins: The number of user likes.
+cover: The url of cover image of this season.
+episode_status: The status of this episode, 1 for on air, 2 for finished.
+index: The index of this episode in season.
+index_title: The title of this episode.
+tags: Tags marked by users, seperated by "|".
+update_time: The timestamp of information update by Bilibili.
+season_id: The season_id of corresponding season.
+createdAt: The timestamp of current entry creation.
+updatedAt: The timestamp of current entry update.
+
+
+Danmaku (TSC) Data Structure
+
+raw_id: Primary key. The internal id of this TSC.
+playback_time: The time when this TSC appears in the video.
+type: The type of this TSC.
+font_size: The font size of this TSC.
+font_color: The color of this TSC, HTML color.
+unix_timestamp: The time of user published this TSC.
+pool: The position of how this TSC appear. 0 for normal, 1 for subtitle, 2 for advance.
+sender_id: The id of the sender who published this TSC.
+content: The content of TSC.
+episode_id: The episode_id of corresponding episode.
+createdAt: The timestamp of current entry creation.
+updatedAt: The timestamp of current entry update.
