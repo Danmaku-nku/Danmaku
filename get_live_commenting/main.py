@@ -88,7 +88,7 @@ class GetDanmuSeg:
             os.makedirs("./seg/" + self.bvid + "/page_" + str(page))
             file_num = 0
             for i in range(len(urls)):
-                # if i % 5 == 0:
+                 if i % 5 == 0:
                     seg = requests.get(urls[i], headers=self.headers)
 
                     with open(r"./seg/" + self.bvid + "/page_" + str(page) + "/seg_" + str(file_num) + ".so",

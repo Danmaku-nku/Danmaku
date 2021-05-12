@@ -1,7 +1,7 @@
-Dear Hongwei Wang:	
+Dear Chenchen Li:	
 	This is Yixuan Zhang, an undergraduate student from Nankai University.I read your article on the Danmu 
 	[Visual-Texual Emotion Analysis With Deep Coupled Video and Danmu Neural Networks] and found it a very interesting and brilliant job.
-	We are very interested in the dataset you annotated with emotional labels and would like to use it for further work
+	We are very interested in the dataset you annotated with emotional labels and would like to use it for further work.
 	If you would like to provide your dataset Video-Danmu, we will cite your paper once our work is done.
 	If you require any further information, please let me know.
 	Thanks a lot.
