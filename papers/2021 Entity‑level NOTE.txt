@@ -1,0 +1,30 @@
+we present and release a new Chinese movie review dataset,
+consisting of two contemporary data types: comments and Danmaku
+with annotated entity-level sentiment labels.
+These datasets provide a new perspective for entity-based sentiment classification,
+making the dataset ideal for exploring the interaction of sentiment classification on video comments.
+
+Table 1 shows the coding book for categorizing diferent sentiment polarity of 
+Danmaku and comments. We use the majority voting rules [12] to choose the correct label. If more than fve annotators voted the same label, we set the tag as ground 
+truth. Finally, we receive 13,903 comments and 3415 Danmaku as our experiment 
+datasets.
+
+
+• We have collected two kinds of movie review corpus, namely Danmaku and 
+comments from popular video website iQiYi.7
+ We preprocess the data by 
+Tokenization, POStagging as preparation data.
+• We use open-source tools and algorithms to label the data automatically (e.g., 
+Paddlehub,8
+ SnowNlp9
+). Then, we aggregate the results to reduce checking complexity.
+• We recruit six undergraduate students in a Chinese research university who love 
+watching TV to check the annotation tagging results. For this case, we use the 
+following litmus test: If the Danmaku or comment contains negative emotions 
+for the given entity (e.g., dislike, angry, hate, abuse), it belongs to the negative class. If the Danmaku or comment contains positive emotions for the given 
+entity (e.g., like, happy, praise), then it belongs to the positive class. Otherwise, 
+there is no emotional tendency, and it belongs to neutral. For example, the following comment “Zhangsan is not good at acting, Lisi is so beautiful” can be 
+classifed onto the negative class for “Zhangsan” (Entity) and positive class for 
+“Lisi” (Entity).
+• We fnally collect the labeled corpus as datasets for the entity-level sentiment 
+classifcation task.

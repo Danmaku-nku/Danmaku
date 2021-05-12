@@ -1,0 +1,39 @@
+现有的作品分为两类:1)基于视觉的方法，以视觉内容为重点，提取出一组特定的视频特征。
+然而，由于类内方差较大，从低级视频像素到高级情感空间的映射函数通常很难学习。
+2)基于文本的方法，侧重于调查与视频相关的用户生成评论。
+通过传统语言方法学习到的词汇表征通常缺乏情感信息，全局评论通常反映的是观者的高层次理解，而非即时情感。
+
+为了解决这些限制，本文提出将视频内容和用户生成的文本同时用于情感分析。
+特别是，我们引入了一种新型的用户生成文本，即弹目，它是在视频上浮动的实时评论，包含丰富的信息来传达观众的情感意见。
+为了提高文本特征提取中词的情感判别能力，我们提出了情感词嵌入(EWE)方法，将语义和情感结合起来学习文本表示。
+在此基础上，提出了一种基于深度耦合视频和丹木神经网络(DCVDN)的视觉-文本情感分析模型，该模型通过基于深度正则相关自编码器的多视图学习，同步提取和融合视觉特征，形成全面的情感表达。
+
+Specifically, for each video clip, we first perform clustering on all of its danmus according to their burst
+pattern. Each set of clustered danmus is aggregated into one
+danmu document as nearby danmus express viewers’ attitudes
+towards similar video content at a specific moment.
+
+ The key idea of EWE
+is to encode emotional information along with the semantics
+into each word for joint word representation learning, which is
+proved to be able to effectively preserve the original emotion
+information in texts during the learning process
+
+. Our video-danmu dataset consists of 4,056 video clips and 371,177 danmus, in which each
+example is associated with one of seven emotion classes: Happy,
+Love, Anger, Sad, Fear, Disgust, and Surprise.
+
+ The
+distribution of danmus reflects user engagement to the video
+content and the video content at burst points of danmus is typically more attractive to viewers than other parts. Aware of
+this phenomenon, we apply the K-means algorithm to segment
+danmus into a set of clusters according to their burst pattern
+and aggregate all danmus in the same cluster into a danmu
+document.
+
+数据集中有4056个视频，时长从1.44秒到514.13秒不等，平均时长为82.89秒。
+在学校的一群学生助手的帮助下，我们将视频分为快乐、爱、愤怒、悲伤、恐惧、厌恶和惊讶7个情感类。
+表1显示了数据集的基本统计数据。每一种情感类型的视频数量相对平衡，从290到669。
+表二列出了自建情感词典中各情感类的词汇和表情符号数量。
+Emoticon是一种文本表达，比如()表示快乐，_表示哭泣。
+它们通常直接表达观众的情感。
