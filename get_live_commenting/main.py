@@ -14,7 +14,7 @@ class GetDanmuSeg:
         self.bvid = bvid
         self.headers = {
             # "cookie": "SESSDATA=36227725%2C1634015792%2C54187%2A41",
-            "cookie": "SESSDATA=ad7ab5d5%2C1634016943%2C747ab%2A41", # zyx
+            "cookie": "SESSDATA=d31bc1fc%2C1636109908%2C55010%2A51", # zyx
             # "cookie": "SESSDATA=3349b8d6%2C1633339932%2Cb8cd9*41", # kjh
             "origin": "http://www.bilibili.com",
             # "referer": "http://www.bilibili.com/video/BV1os41127rm",

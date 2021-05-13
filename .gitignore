@@ -1,3 +1,6 @@
 original_video/
 dataset/
+output_videos/
+
 .pyc
+.idea
