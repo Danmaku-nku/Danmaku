@@ -4,7 +4,7 @@ video_path = "./original_video/"
 video_name = "Planet_Earth_I-2.mp4"
 temp_video_path = "./temp_videos"
 
-sub_list_path = "../old_results/DSNet/sub_list_DSNet_8.csv"
+sub_list_path = "../old_results/HSA-rnn/sub_list_HSA_3.csv"
 
 with open(sub_list_path, encoding='utf-8') as result:
     starts = []
@@ -45,8 +45,8 @@ for i in range(len(starts)):
     tag_end = ends[i]
     cmd = 'ffmpeg' + ' -ss ' + tag_start + ' -to ' + tag_end  + ' -accurate_seek -i ' + video_path + video_name + \
           ' -c copy -avoid_negative_ts 1 ' + temp_video_path + '/output' + str(i) + '.mp4'
-    # cmd = 'ffmpeg' + ' -ss ' + tag_start + ' -to ' + tag_end + ' -i ' + video_path + video_name + \
-    #       ' -c:v libx264 -preset superfast -c:a copy ' + temp_video_path + '/output' + str(i) + '.mp4'
+    # cmd = 'ffmpeg' + ' -i ' + video_path + video_name + ' -ss ' + tag_start + ' -to ' + tag_end + \
+    #       ' ' + temp_video_path + '/output' + str(i) + '.mp4'
 
     with open(temp_video_path + '/filelist.txt', 'a', encoding='utf-8') as f:
         text = 'file   ' + "'" + 'output' + str(i) + '.mp4' + "' \n"

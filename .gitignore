@@ -1,6 +1,7 @@
 original_video/
 dataset/
 output_videos/
+comparative_experiments/
 
 .pyc
 .idea
